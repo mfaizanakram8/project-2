@@ -15,7 +15,7 @@ function Page() {
       <div className="flex flex-wrap justify-center">
         {courseData.courses.map((course) => (
           <CardContainer key={course.id} className="inter-var text-white m-4">
-            <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] bg-[#1a1a1a] dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
+            <CardBody className=" relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] bg-[#1a1a1a] dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
               <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white">
                 {course.title}
               </CardItem>
