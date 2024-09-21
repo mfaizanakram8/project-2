@@ -1,3 +1,4 @@
+// TestiMonialCard.jsx
 'use client';
 
 import { InfiniteMovingCards } from "./ui/infinite-moving-cards";
@@ -10,7 +11,7 @@ const testimonials = [
   },
   {
     quote: 'As an app developer, I’ve found this platform to be a game-changer. The detailed guides and practical exercises have made creating robust and efficient applications much more straightforward.',
-    name: 'Michael faraday',
+    name: 'Michael Faraday',
     title: 'Mobile App Developer',
   },
   {
@@ -35,7 +36,7 @@ const testimonials = [
   },
   {
     quote: 'The interactive coding exercises and detailed feedback have accelerated my journey from a beginner to an advanced developer in web technologies.',
-    name: 'ALI Baba',
+    name: 'Ali Baba',
     title: 'Web Developer',
   },
   {
@@ -54,7 +55,7 @@ const testimonials = [
     title: 'Full-Stack Developer',
   },
   {
-    quote: 'The resources for angular.js here are top-notch. The clarity and depth of the tutorials have made building modern web applications much easier and more enjoyable.',
+    quote: 'The resources for Angular.js here are top-notch. The clarity and depth of the tutorials have made building modern web applications much easier and more enjoyable.',
     name: 'Noman',
     title: 'Frontend Developer',
   },
@@ -67,21 +68,25 @@ const testimonials = [
 
 function TestiMonialCard() {
   return (
-    <div className="relative flex flex-col items-center justify-center h-[40rem] w-full bg-black bg-grid-white/[0.2] overflow-hidden">
-        <h2 className="text-3xl font-bold text-center mb-8 text-white relative z-10">Hear Our Voices: Success Stories from the Coding Community</h2>
-        <div className="flex relative overflow-hidden px-4 sm:px-6 lg:px-8 w-full">
-            <div className="flex justify-center items-center w-full max-w-6xl">
-                <InfiniteMovingCards
-                    items={testimonials}
-                    direction="right"
-                    speed="slow"
-                />
-            </div>
-            <div className="absolute inset-0 flex items-center justify-between">
-                <div className="w-1/2 h-full bg-gradient-to-r from-transparent to-black opacity-60"></div>
-                <div className="w-1/2 h-full bg-gradient-to-l from-transparent to-black opacity-60"></div>
-            </div>
+    <div className="relative flex flex-col items-center justify-center h-[40rem] w-full bg-black overflow-hidden">
+      <h2 className="text-3xl font-bold text-center mb-8 text-white relative z-10">
+        Hear Our Voices: Success Stories from the Coding Community
+      </h2>
+      <div className="relative overflow-hidden px-4 sm:px-6 lg:px-8 w-full">
+        <div className="flex justify-center items-center w-full max-w-6xl">
+          <div className="relative w-full bg-grid-white(0.02)"> {/* Updated Class */}
+            <InfiniteMovingCards
+              items={testimonials}
+              direction="right"
+              speed="slow"
+            />
+          </div>
         </div>
+        <div className="absolute inset-0 flex items-center justify-between">
+          <div className="w-1/2 h-full bg-gradient-to-r from-transparent to-black opacity-60"></div>
+          <div className="w-1/2 h-full bg-gradient-to-l from-transparent to-black opacity-60"></div>
+        </div>
+      </div>
     </div>
   );
 }

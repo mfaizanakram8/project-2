@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 import { StickyScroll } from "./sticky-scroll-reveal";
-import { a } from "framer-motion/client";
-import { addAbortListener } from "events";
 
 const codingSchoolContent = [
   {
@@ -20,7 +18,7 @@ const codingSchoolContent = [
     description:
       "Experience the power of real-time code updates. With our platform, you can track every change as it happens, ensuring you’re always working with the latest version. Simplify your workflow and stay on top of your projects with instant updates.",
     content: (
-        <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
+      <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
         Real-Time Code Changes
       </div>
     ),

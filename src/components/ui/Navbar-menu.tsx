@@ -18,20 +18,20 @@ export const MenuItem = ({
   active,
   children,
 }: {
-  setActive: (item: string | null) => void; // Accepts null
+  setActive: (item: string | null) => void; 
   item: string;
-  active: string | null; // Accepts active state
+  active: string | null; 
   children?: React.ReactNode;
 }) => {
   return (
     <div
-      onMouseEnter={() => setActive(item)} // Set active item on hover
-      onMouseLeave={() => setActive(null)} // Reset active item on mouse leave
+      onMouseEnter={() => setActive(item)} 
+      onMouseLeave={() => setActive(null)} 
       className="relative"
     >
       <motion.p
-        transition={transition} // Apply the transition here
-        className={`cursor-pointer text-white hover:text-gray-300 ${active === item ? 'font-bold' : ''}`} // Highlight if active
+        transition={transition} 
+        className={`cursor-pointer text-white hover:text-gray-300 ${active === item ? 'font-bold' : ''}`} 
       >
         {children}
       </motion.p>

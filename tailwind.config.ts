@@ -1,55 +1,65 @@
-import type { Config } from 'tailwindcss';
-import svgToDataUri from 'mini-svg-data-uri';
-import { PluginAPI } from 'tailwindcss/types/config';
+import svgToDataUri from "mini-svg-data-uri";
+import { Config } from "tailwindcss";
+import { PluginAPI } from "tailwindcss/types/config";
 
-// Function to add CSS variables for colors
+
 function addVariableForColors({ addBase, theme }: PluginAPI) {
-  const allColors = theme('colors');
+  const allColors = theme('colors', {}) || {};
 
-  if (!allColors) return;
+  const newVars: Record<string, string> = {};
 
-  const newVars = Object.fromEntries(
-    Object.entries(allColors).flatMap(([key, value]) => {
-      if (typeof value === 'string') {
-        return [[`--${key}`, value]];
-      }
-      if (typeof value === 'object') {
-        return Object.entries(value).map(([subKey, subValue]) => [`--${key}-${subKey}`, subValue]);
-      }
-      return [];
-    })
-  );
+  Object.entries(allColors).forEach(([key, value]) => {
+    if (typeof value === 'string') {
+      newVars[`--${key}`] = value;
+    } else if (typeof value === 'object' && value !== null) {
+      Object.entries(value).forEach(([subKey, subValue]) => {
+        if (typeof subValue === 'string') {
+          newVars[`--${key}-${subKey}`] = subValue;
+        }
+      });
+    }
+  });
 
   addBase({
     ":root": newVars,
   });
 }
 
-// Function to add SVG patterns as background utilities
-function addSvgPatterns({ matchUtilities, theme }: PluginAPI) {
-  const colors = theme('backgroundColor');
 
-  const colorValues = Object.values(colors).flat(Infinity).filter((val) => typeof val === 'string');
+function addSvgPatterns({ matchUtilities, theme }: PluginAPI) {
+  const colors = theme('colors', {}) || {};
+  const colorEntries = Object.entries(colors);
 
   matchUtilities(
     {
       "bg-grid": (value: string) => ({
         backgroundImage: `url("${svgToDataUri(
-          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
+          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}" stroke-opacity="0.2"><path d="M0 0 H32" /><path d="M0 0 V32" /></svg>`
         )}")`,
+        backgroundSize: '32px 32px',
       }),
       "bg-grid-small": (value: string) => ({
         backgroundImage: `url("${svgToDataUri(
-          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
+          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8" width="8" height="8" fill="none" stroke="${value}" stroke-opacity="0.2"><path d="M0 0 H8" /><path d="M0 0 V8" /></svg>`
         )}")`,
+        backgroundSize: '8px 8px',
       }),
       "bg-dot": (value: string) => ({
         backgroundImage: `url("${svgToDataUri(
-          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none"><circle fill="${value}" id="pattern-circle" cx="10" cy="10" r="1.6257413380501518"></circle></svg>`
+          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none"><circle fill="${value}" cx="8" cy="8" r="1.6257413380501518"></circle></svg>`
         )}")`,
+        backgroundSize: '16px 16px',
       }),
     },
-    { values: colorValues, type: "color" }
+    {
+      values: Object.fromEntries(
+        colorEntries.map(([key, value]) => [
+          key,
+          typeof value === 'string' ? value : 'currentColor',
+        ])
+      ),
+      type: "color",
+    }
   );
 }
 
@@ -72,7 +82,7 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        background: "var(--background)",
+        background: "#111827",
         foreground: "var(--foreground)",
       },
       keyframes: {
@@ -109,8 +119,8 @@ const config: Config = {
         },
         meteorFall: {
           to: {
-            transform: "translateY(100vh)", /* Move down the viewport */
-            opacity: "0", /* Fade out */
+            transform: "translateY(100vh)",
+            opacity: "0",
           },
         },
       },

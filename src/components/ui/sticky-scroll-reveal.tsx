@@ -4,19 +4,23 @@ import { useMotionValueEvent, useScroll } from "framer-motion";
 import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
 
-export const StickyScroll = ({
+interface ContentItem {
+  title: string;
+  description: string;
+  content?: React.ReactNode;
+}
+
+interface StickyScrollProps {
+  content: ContentItem[];
+  contentClassName?: string;
+}
+
+export const StickyScroll: React.FC<StickyScrollProps> = ({
   content,
   contentClassName,
-}: {
-  content: {
-    title: string;
-    description: string;
-    content?: React.ReactNode | any;
-  }[];
-  contentClassName?: string;
 }) => {
-  const [activeCard, setActiveCard] = React.useState(0);
-  const ref = useRef<any>(null);
+  const [activeCard, setActiveCard] = useState(0);
+  const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     container: ref,
     offset: ["start start", "end start"],
