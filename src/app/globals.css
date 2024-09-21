@@ -26,3 +26,19 @@ body {
   }
 }
 
+.canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.blur-10 {
+  filter: blur(10px);
+}
+
+.blur-20 {
+  filter: blur(20px);
+}
+.blur-30 {
+  filter: blur(30px);
+}

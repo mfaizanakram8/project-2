@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/utils/cn";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { createNoise3D } from "simplex-noise";
@@ -21,7 +22,7 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
   containerClassName,
   colors,
   waveWidth = 50,
-  backgroundFill,
+  backgroundFill = "black",
   blur = 10,
   speed = "fast",
   waveOpacity = 0.5,
@@ -37,36 +38,40 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
   const nt = useRef<number>(0);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
 
-  const getSpeed = () => (speed === "slow" ? 0.001 : 0.002);
+  const getSpeed = useCallback(() => (speed === "slow" ? 0.001 : 0.002), [speed]);
 
-  const drawWave = useCallback((n: number) => {
-    nt.current += getSpeed();
-    if (ctx.current) {
-      for (let i = 0; i < n; i++) {
-        ctx.current.beginPath();
-        ctx.current.lineWidth = waveWidth!;
-        ctx.current.strokeStyle = (colors || [
-          "#38bdf8",
-          "#818cf8",
-          "#c084fc",
-          "#e879f9",
-          "#22d3ee",
-        ])[i % (colors ? colors.length : 5)];
-        
-        for (let x = 0; x < w.current; x += 5) {
-          const y = noise(x / 800, 0.3 * i, nt.current) * 100;
-          ctx.current.lineTo(x, y + h.current * 0.5);
+  const drawWave = useCallback(
+    (n: number) => {
+      nt.current += getSpeed();
+      if (ctx.current) {
+        for (let i = 0; i < n; i++) {
+          ctx.current.beginPath();
+          ctx.current.lineWidth = waveWidth!;
+          ctx.current.strokeStyle =
+            (colors || [
+              "#38bdf8",
+              "#818cf8",
+              "#c084fc",
+              "#e879f9",
+              "#22d3ee",
+            ])[i % (colors ? colors.length : 5)];
+
+          for (let x = 0; x < w.current; x += 5) {
+            const y = noise(x / 800, 0.3 * i, nt.current) * 100;
+            ctx.current.lineTo(x, y + h.current * 0.5);
+          }
+          ctx.current.stroke();
+          ctx.current.closePath();
         }
-        ctx.current.stroke();
-        ctx.current.closePath();
       }
-    }
-  }, [waveWidth, colors]);
+    },
+    [getSpeed, waveWidth, colors, noise]
+  );
 
   const render = useCallback(() => {
     if (ctx.current) {
-      ctx.current.fillStyle = backgroundFill || "black";
-      ctx.current.globalAlpha = waveOpacity || 0.5;
+      ctx.current.fillStyle = backgroundFill;
+      ctx.current.globalAlpha = waveOpacity;
       ctx.current.fillRect(0, 0, w.current, h.current);
       drawWave(5);
       animationIdRef.current = requestAnimationFrame(render);
@@ -80,11 +85,10 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
       if (ctx.current) {
         w.current = (ctx.current.canvas.width = window.innerWidth);
         h.current = (ctx.current.canvas.height = window.innerHeight);
-        ctx.current.filter = `blur(${blur}px)`; // Set blur effect
-        render(); // Call render
+        render();
       }
     }
-  }, [blur, render]);
+  }, [render]);
 
   useEffect(() => {
     init();
@@ -107,10 +111,21 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
   useEffect(() => {
     setIsSafari(
       typeof window !== "undefined" &&
-      navigator.userAgent.includes("Safari") &&
-      !navigator.userAgent.includes("Chrome")
+        navigator.userAgent.includes("Safari") &&
+        !navigator.userAgent.includes("Chrome")
     );
   }, []);
+
+  // Mapping blur values to CSS classes
+  const blurClasses: { [key: number]: string } = {
+    10: "blur-10",
+    20: "blur-20",
+    30: "blur-30",
+    // Add more mappings as needed
+  };
+
+  // Determine the appropriate blur class
+  const blurClass = isSafari ? (blurClasses[blur] || "blur-10") : "";
 
   return (
     <div
@@ -119,14 +134,7 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
         containerClassName
       )}
     >
-      <canvas
-        className="absolute inset-0 z-0"
-        ref={canvasRef}
-        id="canvas"
-        style={{
-          ...(isSafari ? { filter: `blur(${blur}px)` } : {}),
-        }}
-      />
+      <canvas className={`canvas ${blurClass}`} ref={canvasRef} id="canvas" />
       <div className={cn("relative z-10", className)} {...props}>
         {children}
       </div>

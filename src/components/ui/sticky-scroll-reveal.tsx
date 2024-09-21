@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
@@ -48,11 +48,11 @@ export const StickyScroll: React.FC<StickyScrollProps> = ({
     "#111827", // Black
   ];
 
-  // Blue gradients for the side box
-  const linearGradients = [
+  // Memoized blue gradients for the side box
+  const linearGradients = useMemo(() => [
     "linear-gradient(to bottom right, #00bfae, #00c897)", // Blue gradient
     "linear-gradient(to bottom right, #ff007f, #ff00b3)", // Another gradient (example)
-  ];
+  ], []);
 
   const [backgroundGradient, setBackgroundGradient] = useState(
     linearGradients[0]
@@ -60,7 +60,7 @@ export const StickyScroll: React.FC<StickyScrollProps> = ({
 
   useEffect(() => {
     setBackgroundGradient(linearGradients[activeCard % linearGradients.length]);
-  }, [activeCard]);
+  }, [activeCard, linearGradients]);
 
   return (
     <motion.div

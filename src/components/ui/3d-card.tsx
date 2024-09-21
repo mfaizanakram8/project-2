@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/utils/cn";
-import React, { createContext, useState, useContext, useRef, useEffect } from "react";
+import React, { createContext, useState, useContext, useRef, useEffect, useCallback } from "react";
 
 type MouseEnterContextType = [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 
@@ -96,18 +96,18 @@ export const CardItem = ({
   const ref = useRef<HTMLDivElement>(null);
   const [isMouseEntered] = useMouseEnter();
 
-  useEffect(() => {
-    handleAnimations();
-  }, [isMouseEntered]);
-
-  const handleAnimations = () => {
+  const handleAnimations = useCallback(() => {
     if (!ref.current) return;
     if (isMouseEntered) {
       ref.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
     } else {
       ref.current.style.transform = `translateX(0) translateY(0) translateZ(0) rotateX(0) rotateY(0) rotateZ(0)`;
     }
-  };
+  }, [isMouseEntered, translateX, translateY, translateZ, rotateX, rotateY, rotateZ]);
+
+  useEffect(() => {
+    handleAnimations();
+  }, [isMouseEntered, handleAnimations]);
 
   return (
     <Tag ref={ref} className={cn("w-fit transition duration-200 ease-linear", className)} {...rest}>
