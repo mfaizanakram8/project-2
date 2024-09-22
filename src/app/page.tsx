@@ -7,7 +7,7 @@ import FeaturedCourses from '@/components/FeaturedCourses';
 import WhyChooseUs from '@/components/ui/WhyChooseUs';
 import TestiMonialCard from '@/components/TestiMonialCard';
 import UpComingWebinars from '@/components/UpComingWebinars';
-// import Instructors from '@/components/instructors';
+import Instructors from '@/components/instructors';
 
 const HomePage = () => {
   return (
@@ -17,7 +17,7 @@ const HomePage = () => {
       <WhyChooseUs />
       <TestiMonialCard />
       <UpComingWebinars />
-      {/* <Instructors /> */}
+      <Instructors />
     </main>
   );
 }
