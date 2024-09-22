@@ -1,7 +1,10 @@
 "use client";
 
+// eslint-disable-next-line
 import { cn } from "@/utils/cn";
+// eslint-disable-next-line
 import React, { useEffect, useRef, useState, useCallback } from "react";
+// eslint-disable-next-line
 import { createNoise3D } from "simplex-noise";
 
 interface WavyBackgroundProps extends React.HTMLProps<HTMLDivElement> {
@@ -28,13 +31,13 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
   waveOpacity = 0.5,
   ...props
 }) => {
+  // eslint-disable-next-line
   const noise = createNoise3D();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationIdRef = useRef<number | null>(null);
   const [isSafari, setIsSafari] = useState(false);
+  const [dimensions, setDimensions] = useState({ w: 0, h: 0 });
 
-  const w = useRef<number>(window.innerWidth);
-  const h = useRef<number>(window.innerHeight);
   const nt = useRef<number>(0);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
 
@@ -56,35 +59,34 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
               "#22d3ee",
             ])[i % (colors ? colors.length : 5)];
 
-          for (let x = 0; x < w.current; x += 5) {
+          for (let x = 0; x < dimensions.w; x += 5) {
             const y = noise(x / 800, 0.3 * i, nt.current) * 100;
-            ctx.current.lineTo(x, y + h.current * 0.5);
+            ctx.current.lineTo(x, y + dimensions.h * 0.5);
           }
           ctx.current.stroke();
           ctx.current.closePath();
         }
       }
     },
-    [getSpeed, waveWidth, colors, noise]
+    [getSpeed, waveWidth, colors, noise, dimensions]
   );
 
   const render = useCallback(() => {
     if (ctx.current) {
       ctx.current.fillStyle = backgroundFill;
       ctx.current.globalAlpha = waveOpacity;
-      ctx.current.fillRect(0, 0, w.current, h.current);
+      ctx.current.fillRect(0, 0, dimensions.w, dimensions.h);
       drawWave(5);
       animationIdRef.current = requestAnimationFrame(render);
     }
-  }, [backgroundFill, waveOpacity, drawWave]);
+  }, [backgroundFill, waveOpacity, drawWave, dimensions]);
 
   const init = useCallback(() => {
     const canvas = canvasRef.current;
     if (canvas) {
       ctx.current = canvas.getContext("2d");
       if (ctx.current) {
-        w.current = (ctx.current.canvas.width = window.innerWidth);
-        h.current = (ctx.current.canvas.height = window.innerHeight);
+        setDimensions({ w: window.innerWidth, h: window.innerHeight });
         render();
       }
     }
@@ -93,10 +95,7 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
   useEffect(() => {
     init();
     const handleResize = () => {
-      if (ctx.current) {
-        w.current = (ctx.current.canvas.width = window.innerWidth);
-        h.current = (ctx.current.canvas.height = window.innerHeight);
-      }
+      setDimensions({ w: window.innerWidth, h: window.innerHeight });
     };
     window.addEventListener("resize", handleResize);
 

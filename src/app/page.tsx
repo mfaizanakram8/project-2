@@ -1,12 +1,15 @@
+
+"use client";
+
 import React from 'react';
 import HeroSection from '@/components/HeroSection';
 import FeaturedCourses from '@/components/FeaturedCourses';
 import WhyChooseUs from '@/components/ui/WhyChooseUs';
 import TestiMonialCard from '@/components/TestiMonialCard';
 import UpComingWebinars from '@/components/UpComingWebinars';
-import Instructors from '@/components/instructors';
+// import Instructors from '@/components/instructors';
 
-const Page = () => {
+const HomePage = () => {
   return (
     <main className='min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.07]'>
       <HeroSection />
@@ -14,9 +17,9 @@ const Page = () => {
       <WhyChooseUs />
       <TestiMonialCard />
       <UpComingWebinars />
-      <Instructors/>
+      {/* <Instructors /> */}
     </main>
   );
 }
 
-export default Page;
+export default HomePage;

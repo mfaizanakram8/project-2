@@ -1,4 +1,5 @@
-'use client';
+
+"use client";
 
 import Image from "next/image";
 import React from "react";
@@ -6,16 +7,16 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Link from "next/link";
 import courseData from "@/data/code_courses.json";
 
-function Page() {
+const CoursesPage = () => {
   return (
     <div className="min-h-screen bg-black py-12 pt-36">
-      <h1 className="text-lg md:text-7xl text-center font-sans font-bold mb-8 text-white">
+      <h1 className="text-lgnext build md:text-7xl text-center font-sans font-bold mb-8 text-white">
         All courses ({courseData.courses.length})
       </h1>
       <div className="flex flex-wrap justify-center">
         {courseData.courses.map((course) => (
           <CardContainer key={course.id} className="inter-var text-white m-4">
-            <CardBody className=" relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] bg-[#1a1a1a] dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
+            <CardBody className="relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] bg-[#1a1a1a] dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
               <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white">
                 {course.title}
               </CardItem>
@@ -57,4 +58,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default CoursesPage;
