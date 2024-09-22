@@ -38,24 +38,3 @@ body {
 .blur-30 {
   filter: blur(30px);
 }
-.canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.container {
-  height: 100vh; /* Full screen height */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.relative {
-  position: relative;
-  z-index: 10; /* Higher than canvas */
-}
-.safari-blur {
-  filter: blur(10px); /* Adjust the blur value as needed */
-}
