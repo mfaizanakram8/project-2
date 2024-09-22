@@ -89,7 +89,7 @@ export const InfiniteMovingCards = ({
           <li
             className="w-[350px] max-w-full relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 px-8 py-6 md:w-[450px]"
             style={{
-              backgroundColor: "#111827", // Final background color
+              backgroundColor: "#111827", 
             }}
             key={item.name}
           >

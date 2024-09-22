@@ -1,4 +1,4 @@
-"use client"; // Add this line at the top
+"use client"; 
 import { cn } from "@/utils/cn";
 import React from "react";
 import { motion } from "framer-motion";

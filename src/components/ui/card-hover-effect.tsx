@@ -1,4 +1,4 @@
-"use client"; // Add this if this is a client component
+"use client"; 
 
 import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";

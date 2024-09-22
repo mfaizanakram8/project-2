@@ -91,7 +91,7 @@ export const CardItem = ({
   rotateX?: number | string;
   rotateY?: number | string;
   rotateZ?: number | string;
-  [key: string]: unknown; // Use 'unknown' instead of 'any'
+  [key: string]: unknown; 
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isMouseEntered] = useMouseEnter();
@@ -116,7 +116,7 @@ export const CardItem = ({
   );
 };
 
-// Create a hook to use the context
+
 export const useMouseEnter = () => {
   const context = useContext(MouseEnterContext);
   if (context === undefined) {
