@@ -39,7 +39,7 @@ function Footer() {
             <p>Phone: <span className="hover:text-white">03106800495</span></p>
           </div>
         </div>
-        <p className="flex justify-center p-2">@ 2024 C2TEC,All right reserved</p>
+        <p className="flex justify-center p-2">© 2024 C2tec - Master the Craft of Coding.</p>
       </footer>
     );
   }
