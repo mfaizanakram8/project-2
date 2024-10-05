@@ -38,3 +38,11 @@ body {
 .blur-30 {
   filter: blur(30px);
 }
+
+.instructor-background {
+  background-image: url('/components/images/c2tec.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.1;
+}
