@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { StickyScroll } from "./sticky-scroll-reveal";
+import { StickyScroll } from "./ui/sticky-scroll-reveal";
 
 const codingSchoolContent = [
   {
